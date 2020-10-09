@@ -1,0 +1,25 @@
+.flexBC {
+   display: flex;
+   justify-content: space-between;
+ }
+ .flexC {
+   display: flex;
+   justify-content: center;
+ }
+ .flexCC {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+ .flexLC {
+   display: flex;
+   align-items: center;
+ }
+ .flexRC {
+   display: flex;
+   justify-content: flex-end;
+ }
+ .flexS0 {
+   flex-shrink: 0;
+ }
+ /* 工具类 */

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/index.css" />
+    <link rel="stylesheet" href="../static/css/utilFlex.css" />
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.20.0/axios.js"></script>
+  </head>
+  <body>
+      <form enctype='multipart/form-data' method='post' action="http://10.4.72.157:3000/uploadfiles">
+         <input type="file" id="btn_file" name="file" style="display: none" />
+         <!-- <input type="submit" value="" /> -->
+      </form>
+    <div class="selectFiles flexLC">
+      <div>选择文件</div>
+      <div id="selectFileName"></div>
+    </div>
+    <div class="upLoads">开始上传</div>
+  </body>
+  <script>
+    const isInput = document.querySelector("#btn_file");
+    const isSelectButton = document.querySelector(".selectFiles");
+    const isUploadsButton = document.querySelector(".upLoads");
+    isSelectButton.onclick = () => {
+      isInput.click();
+      console.log("文件选择");
+    };
+    isInput.onchange = () => {
+      document.querySelector("#selectFileName").innerText = `${isInput.files[0].name}`;
+    };
+    isUploadsButton.onclick = () => {
+      console.log("开始上传");
+      let file = isInput.files[0];
+      let formData = new FormData();
+      formData.append("file", file);
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      axios
+        .post("http://10.4.72.157:3000/uploadfiles", formData, config)
+        .then((data) => {
+          console.log(data);
+        });
+    };
+  </script>
+</html>

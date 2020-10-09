@@ -1,0 +1,7 @@
+.word{
+   color: red;
+}
+div::selection{
+   color: #fff;
+   background:red;
+}
