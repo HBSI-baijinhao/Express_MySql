@@ -11,6 +11,8 @@ const uri = `http://${os.networkInterfaces()['以太网'][1].address}:${port}`;
 // 
 app.use(express.static('public'))
 app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use(express.static('uploadFiles'))
+app.use('/uploadFiles', express.static(path.join(__dirname, 'uploadFiles')));
 // 
 const ejs = require("ejs");
 app.set("views",path.resolve(__dirname,"./public/views"))

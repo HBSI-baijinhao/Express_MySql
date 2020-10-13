@@ -1,7 +1,30 @@
-.word{
-   color: red;
+.word {
+  color: red;
 }
-div::selection{
-   color: #fff;
-   background:red;
+#picBack {
+   width: 100px;
+   height: 100px;
+}
+.ispicbackImg{
+   width: 400px;
+   object-fit: contain;
+}
+body>div{
+   box-sizing: border-box;
+   padding: 20px;
+}
+div::selection {
+  color: #fff;
+  background: red;
+}
+.fileLists {
+  margin-left: 15px;
+}
+.clearThisSelection,
+.uploadsFileclearSelection {
+  background: sandybrown;
+  width: 15px;
+  height: 15px;
+  display: none;
+  margin-left: 7px;
 }

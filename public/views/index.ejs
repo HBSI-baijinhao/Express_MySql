@@ -5,46 +5,168 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/css/index.css" />
     <link rel="stylesheet" href="../static/css/utilFlex.css" />
-    <title>Document</title>
+    <title>文件上传</title>
     <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.20.0/axios.js"></script>
   </head>
-  <body>
-      <form enctype='multipart/form-data' method='post' action="http://10.4.72.157:3000/uploadfiles">
-         <input type="file" id="btn_file" name="file" style="display: none" />
-         <!-- <input type="submit" value="" /> -->
+  <body class="flexC">
+    <div class="flexS0" id="单图上传">
+      <div class="isname"><h1>单图上传</h1></div>
+      <form
+        id="isForm"
+        enctype="multipart/form-data"
+        method="post"
+        action="http://10.4.72.157:3000/uploadfiles"
+      >
+        <input type="file" id="btn_file" name="file" style="display: none" />
+        <!-- <input type="submit" value="" /> -->
       </form>
-    <div class="selectFiles flexLC">
-      <div>选择文件</div>
-      <div id="selectFileName"></div>
+      <div class="selectFiles flexLC">
+        <div id="selectFiles">选择文件</div>
+        <div class="fileLists flexLC">
+          <div id="selectFileName"></div>
+          <div class="clearThisSelection"></div>
+        </div>
+      </div>
+      <div class="upLoads">开始上传</div>
+      <div id="picBack"></div>
     </div>
-    <div class="upLoads">开始上传</div>
+    <div class="flexS0">
+      <div class="isname"><h1>多图上传</h1></div>
+      <div>
+        <form
+          enctype="multipart/form-data"
+          method="post"
+          action="http://10.4.72.157:3000/uploadsFilelists"
+        >
+          请选择文件：<input
+            type="file"
+            id="upfiles"
+            name="file"
+            multiple
+          /><br />
+          <input type="submit" value="多选文件上传" />
+        </form>
+        <!-- <input type="file" name="files" id="upfiles" multiple="multiple" style="display: none" /> -->
+        <div id="clickuploads">多选文件上传</div>
+        <div id="uploadsFilelists">
+          <!-- <div class="uploadsFilename flexLC">
+            <div>1</div>
+            <div class="uploadsFileclearSelection"></div>
+          </div> -->
+        </div>
+        <div id="startuploads">开始多图上传</div>
+      </div>
+    </div>
   </body>
   <script>
-    const isInput = document.querySelector("#btn_file");
-    const isSelectButton = document.querySelector(".selectFiles");
-    const isUploadsButton = document.querySelector(".upLoads");
-    isSelectButton.onclick = () => {
-      isInput.click();
-      console.log("文件选择");
-    };
-    isInput.onchange = () => {
-      document.querySelector("#selectFileName").innerText = `${isInput.files[0].name}`;
-    };
-    isUploadsButton.onclick = () => {
-      console.log("开始上传");
-      let file = isInput.files[0];
-      let formData = new FormData();
-      formData.append("file", file);
-      let config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    if (true) {
+      const clickuploads = document.querySelector("#clickuploads");
+      const upfiles = document.querySelector("#upfiles");
+      const startuploads = document.querySelector("#startuploads");
+      const uploadsFilelists = document.querySelector("#uploadsFilelists");
+      const uploadsFileclearSelection = document.querySelector(".uploadsFileclearSelection");
+      uploadsFileclearSelection.onclick = (e) =>{
+        console.log("uploadsFileclearSelection.onclick -> ev.target", ev.target)
+      }
+      clickuploads.onclick = () => {
+        upfiles.click();
+        console.log("多文件选择");
       };
-      axios
-        .post("http://10.4.72.157:3000/uploadfiles", formData, config)
-        .then((data) => {
-          console.log(data);
-        });
-    };
+      upfiles.onchange = () => {
+        console.log("文件选择完成");
+        let isHtmlStr = "";
+        let strindex = 0;
+        for (item of upfiles.files) {
+          strindex=strindex + 1
+          isHtmlStr += `<div class="uploadsFilename flexLC">
+            <div>${strindex}.${item.name}</div>
+            <div style="display:block" class="uploadsFileclearSelection"></div>
+          </div>`;
+        }
+        uploadsFilelists.innerHTML = isHtmlStr;
+      };
+      startuploads.onclick = () => {
+        if (upfiles.files.length === 0) return;
+        console.log("开始上传");
+        let file = upfiles.files;
+        console.log("startuploads.onclick -> file", file);
+        let isfilesArray = [];
+        for (isvalue of file) {
+          isfilesArray.push(isvalue);
+        }
+        // file.forEach((item) => {
+        //   isfilesArray.push(item)
+        // })
+        // let formData = new FormData();
+        // console.log(file);
+        // formData.append("file", file);
+        let config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+        axios
+          .post(
+            "http://10.4.72.157:3000/uploadsFilelists",
+            isfilesArray,
+            config
+          )
+          .then((data) => {
+            console.log(data);
+            let picPath = data.data.data.filePath;
+            console.log("isUploadsButton.onclick -> picPath", picPath);
+            picBack.style.backgroundImage = `url(http://10.4.72.157:3000${picPath})`;
+            console.log(123);
+          });
+      };
+    }
+    if (false) {
+      const isInput = document.querySelector("#btn_file");
+      const isSelectButton = document.querySelector("#selectFiles");
+      const isUploadsButton = document.querySelector(".upLoads");
+      const clearThisSelection = document.querySelector(".clearThisSelection");
+      const isForm = document.querySelector("#isForm");
+      const picBack = document.querySelector("#picBack");
+      const selectFileName = document.querySelector("#selectFileName");
+      clearThisSelection.onclick = () => {
+        isInput.value = null;
+        selectFileName.innerText = "";
+        clearThisSelection.style.display = "none";
+        picBack.innerHTML = "";
+        console.log("选择已清除");
+      };
+      isSelectButton.onclick = () => {
+        isInput.click();
+        console.log("文件选择");
+      };
+      isInput.onchange = () => {
+        document.querySelector(
+          "#selectFileName"
+        ).innerText = `${isInput.files[0].name}`;
+        clearThisSelection.style.display = "block";
+      };
+      isUploadsButton.onclick = () => {
+        if (isInput.files.length === 0) return;
+        console.log("开始上传");
+        let file = isInput.files[0];
+        console.log("isUploadsButton.onclick -> file", file);
+        let formData = new FormData();
+        formData.append("file", file);
+        let config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+        axios
+          .post("http://10.4.72.157:3000/uploadfiles", formData, config)
+          .then((data) => {
+            let picPath = data.data.data.filePath;
+            // console.log("isUploadsButton.onclick -> picPath", picPath);
+
+            picBack.innerHTML = `<img class="ispicbackImg" src="http://10.4.72.157:3000${picPath}" />`;
+            // picBack.style.backgroundImage = `url(http://10.4.72.157:3000${picPath})`;
+          });
+      };
+    }
   </script>
 </html>

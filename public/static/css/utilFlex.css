@@ -23,3 +23,37 @@
    flex-shrink: 0;
  }
  /* 工具类 */
+ .dishide{
+   display:none;
+ }
+ .disshow{
+   display:block;
+ }
+ /* 隐藏类 */
+ .fatheralign{
+   display:table;
+ }
+ .childLC{
+   display:table-cell;
+   vertical-align: middle;
+ }
+ /* 居中类 */
+ .floatL{
+   float: left;
+ }
+ .floatR{
+   float: right;
+ }
+ .clearF{
+   clear: both;
+ }
+ /* 浮动类 */
+ .alineHidden{
+   /*不允许换行*/
+  white-space: nowrap;
+  /*超出的部分隐藏*/
+  overflow: hidden;
+  /*多余的文字变成 “...”*/
+  text-overflow: ellipsis;
+ }
+ /* 文字超出一行隐藏类 */

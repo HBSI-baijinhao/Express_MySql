@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const fs = require("fs");
-const upload = require('../public/utils/uploads/fileuploads');
+delete require.cache[require.resolve('../public/utils/uploads/fileuploads.js')];
+const upload = require("../public/utils/uploads/fileuploads.js");
 router.get("/", (req, res) => {
   //   console.log("req", req);
   res.end();
@@ -39,12 +40,25 @@ router.get("/download", function (req, res, next) {
   f.pipe(res);
 });
 //文件上传
-router.post("/uploadfiles",upload.single('file'), function (req, res, next) {
-   if (req.file) {
-      res.send({code:200,msg: '文件上传成功'})
-  }else{
-     res.send({code:400,msg: '参数出错'})
+router.post("/uploadfiles", upload.single("file"), function (req, res, next) {
+  if (req.file) {
+    let filePath ='/uploadFiles/'+req.file.filename
+    res.send({ data: { filePath: filePath }, code: 200, msg: "文件上传成功" });
+  } else {
+    res.send({ code: 400, msg: "参数出错" });
   }
+});
+router.post("/uploadsFilelists", upload.array("file"), function (req, res, next) {
+  console.log(req.files)
 
- });
+  if (req.files) {
+    let filePath = []
+    req.files.forEach((item) => {
+      filePath.push(`/uploadFiles/${item.filename}`)
+    })
+    res.send({ data: filePath, code: 200, msg: "文件上传成功" });
+  } else {
+    res.send({ code: 400, msg: "参数出错" });
+  }
+});
 module.exports = router;
