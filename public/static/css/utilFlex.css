@@ -1,59 +1,83 @@
 .flexBC {
-   display: flex;
-   justify-content: space-between;
- }
- .flexC {
-   display: flex;
-   justify-content: center;
- }
- .flexCC {
-   display: flex;
-   align-items: center;
-   justify-content: center;
- }
- .flexLC {
-   display: flex;
-   align-items: center;
- }
- .flexRC {
-   display: flex;
-   justify-content: flex-end;
- }
- .flexS0 {
-   flex-shrink: 0;
- }
- /* 工具类 */
- .dishide{
-   display:none;
- }
- .disshow{
-   display:block;
- }
- /* 隐藏类 */
- .fatheralign{
-   display:table;
- }
- .childLC{
-   display:table-cell;
-   vertical-align: middle;
- }
- /* 居中类 */
- .floatL{
-   float: left;
- }
- .floatR{
-   float: right;
- }
- .clearF{
-   clear: both;
- }
- /* 浮动类 */
- .alineHidden{
-   /*不允许换行*/
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  justify-content: space-between;
+}
+.flexC {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  justify-content: center;
+}
+.flexCC {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flexLC {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  align-items: center;
+}
+.flexRC {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.flexS0 {
+  flex-shrink: 0;
+}
+.flexWP {
+  flex-wrap: wrap;
+}
+
+/* 工具类 */
+.dishide {
+  display: none;
+}
+.disshow {
+  display: block;
+}
+/* 隐藏类 */
+.fatheralign {
+  display: table;
+}
+.childLC {
+  display: table-cell;
+  vertical-align: middle;
+}
+/* 居中类 */
+.floatL {
+  float: left;
+}
+.floatR {
+  float: right;
+}
+.clearF {
+  clear: both;
+}
+/* 浮动类 */
+.alineHidden {
+  /*不允许换行*/
   white-space: nowrap;
   /*超出的部分隐藏*/
   overflow: hidden;
   /*多余的文字变成 “...”*/
   text-overflow: ellipsis;
- }
- /* 文字超出一行隐藏类 */
+}
+/* 文字超出一行隐藏类 */
+.linesHidden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  /* //作为弹性伸缩盒子模型显示。 */
+  -webkit-box-orient: vertical;
+  /* //设置伸缩盒子的子元素排列方式--从上到下垂直排列 */
+  -webkit-line-clamp: 2;
+  /* //显示的行 */
+}
+/* 文字间距类 */
+.wordSpace{
+  letter-spacing: 0.1rem;
+}
