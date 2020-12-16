@@ -24,7 +24,7 @@ app.engine(".html", ejs.renderFile); //设置模板渲染
 //引入路由
 app.use(`/`, require("./router/index"));
 app.use(`/utils`,require("./router/routerUploadsFile"))
-app.use(express.static(path.join(__dirname, 'dist/static')))//引入vue打包后的文件
+app.use(express.static(path.join(__dirname, 'dist')))//引入vue打包后的文件
 
 const openUrl = require("./public/utils/openUrl"); //启动后自动打开浏览器
 app.listen(port, () => {
